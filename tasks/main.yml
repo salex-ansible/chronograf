@@ -1,0 +1,15 @@
+---
+- name: Download file
+  get_url:
+    url: '{{ chronograf_deb_url }}'
+    dest: ~/chronograf.deb
+    force_basic_auth: yes
+    validate_certs: no
+
+- name: Install Chronograf from deb package
+  apt:
+    deb: ~/chronograf.deb
+    state: present
+  become: yes
+  notify:
+    - restart chronograf
